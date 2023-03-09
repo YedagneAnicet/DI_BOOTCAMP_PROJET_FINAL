@@ -1,0 +1,61 @@
+#bannier {
+  width: 100%;
+  height: 90vh;
+  background: url("https://zupimages.net/up/23/10/3fc6.jpg"),rgba(0,0,0,0.3) top center;
+  background-size: cover;
+  background-blend-mode:color ;
+
+  .container {
+    position: relative;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 56px;
+    color: white;
+  }
+
+  .text {
+    color: white;
+    margin: 10px 0 0 0;
+    font-size: 15px;
+  }
+
+
+}
+
+@media (min-width: 1024px) {
+  #bannier {
+    background-attachment: fixed;
+  }
+}
+
+@media (max-width: 992px) {
+  #bannier {
+    margin-bottom: 0;
+    height: 90vh;
+
+    .container {
+      padding-bottom: 63px;
+    }
+
+    h1 {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    h2 {
+      font-size: 18px;
+      line-height: 24px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media (max-height: 600px) {
+  #bannier {
+    height: 90vh;
+  }
+}

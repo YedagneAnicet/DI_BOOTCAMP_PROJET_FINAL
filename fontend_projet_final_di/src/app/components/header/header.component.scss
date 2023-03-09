@@ -1,0 +1,158 @@
+#topbar {
+  background: #fff;
+  height: 40px;
+  font-size: 14px;
+  transition: all 0.5s;
+  z-index: 996;
+
+  .topbar-scrolled {
+    top: -40px;
+  }
+
+  .contact-info a {
+    line-height: 1;
+    color: #444444;
+    transition: 0.3s;
+  }
+
+  .contact-info a:hover {
+    color: #1977cc;
+  }
+
+  .contact-info i {
+    color: #1977cc;
+    padding-right: 4px;
+    margin-left: 15px;
+    line-height: 0;
+  }
+
+  .contact-info i:first-child {
+    margin-left: 0;
+  }
+
+  .social-links a {
+    color: #437099;
+    padding-left: 15px;
+    display: inline-block;
+    line-height: 1px;
+    transition: 0.3s;
+  }
+
+  .social-links a:hover {
+    color: #1977cc;
+  }
+
+  .social-links a:first-child {
+    border-left: 0;
+  }
+}
+
+#header {
+  background: #fff;
+  transition: all 0.5s;
+  z-index: 997;
+  padding: 15px 0;
+  top: 40px;
+  box-shadow: 0px 2px 15px rgba(25, 119, 204, 0.1);
+
+  .header-scrolled {
+    top: 0;
+  }
+
+  .logo {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .logo a {
+    color: #2c4964;
+  }
+
+  .logo img {
+    max-height: 40px;
+  }
+}
+
+.appointment-btn {
+  margin-left: 25px;
+  background: #1977cc;
+  color: #fff;
+  border-radius: 50px;
+  padding: 8px 25px;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 14px;
+  display: inline-block;
+}
+
+
+
+@media (max-width: 768px) {
+  .appointment-btn {
+    margin: 0 15px 0 0;
+    padding: 6px 18px;
+  }
+}
+
+.navbar {
+  padding: 0;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+
+  li {
+    position: relative;
+    cursor: pointer;
+  }
+
+  a,
+  a:focus {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #2c4964;
+    white-space: nowrap;
+    transition: 0.3s;
+    border-bottom: 2px solid #fff;
+    padding: 5px 2px;
+  }
+
+  a i,
+  a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+  }
+
+  a:hover,
+  .active,
+  .active:focus,
+  li:hover > a {
+    color: #1977cc;
+    border-color: #1977cc;
+  }
+
+  > ul > li {
+    position: relative;
+    white-space: nowrap;
+    padding: 8px 0 8px 20px;
+  }
+}
+
+
+@media (max-width: 991px) {
+  .navbar ul {
+    display: none;
+  }
+}
