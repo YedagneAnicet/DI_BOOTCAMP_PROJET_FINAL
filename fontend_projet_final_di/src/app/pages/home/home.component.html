@@ -1,13 +1,35 @@
 <app-header></app-header>
 
 <main>
-
   <div id="bannier" class="container-fluid d-flex align-items-center">
     <div class="container mt-5">
-      <h1 class="mt-5">Bienvenue sur <span class="text-primary-emphasis">Ma</span><span class="text-success-emphasis">Pharmacie</span></h1>
-      <div class="text">Découvrez notre pharmacie en ligne, ses nombreuses marques et sa large gamme de produits qui permettent de prendre soin de votre santé ou de votre  beauté, mais aussi toutes les garanties qu’elle peut vous offrir</div>
+      <h1 class="mt-5">
+        Bienvenue sur <span class="text-primary-emphasis">Ma</span
+        ><span class="text-success-emphasis">Pharmacie</span>
+      </h1>
+      <div class="text">
+        Découvrez notre pharmacie en ligne, ses nombreuses marques et sa large
+        gamme de produits qui permettent de prendre soin de votre santé ou de
+        votre beauté, mais aussi toutes les garanties qu’elle peut vous offrir
+      </div>
     </div>
   </div>
 
-  <app-product></app-product>
+  <div class="container mt-5 mb-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <app-product></app-product>
+      <app-product></app-product>
+      <app-product></app-product>
+    </div>
+  </div>
+
+  <div class="container mt-5 mb-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <app-blog></app-blog>
+      <app-blog></app-blog>
+      <app-blog></app-blog>
+    </div>
+  </div>
 </main>
+
+<app-footer></app-footer>
