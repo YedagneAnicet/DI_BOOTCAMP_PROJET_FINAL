@@ -15,28 +15,31 @@
 
 <header id="header" class="fixed-top">
   <div class="container d-flex align-items-center">
-
     <h1 class="logo me-auto">
-      <img src="https://zupimages.net/up/23/10/ohm9.png" alt="logo">
-      <a>Ma<span class="text-success">Pharmacie</span></a></h1>
+      <img src="https://zupimages.net/up/23/10/ohm9.png" alt="logo" />
+      <a>Ma<span class="text-success">Pharmacie</span></a>
+    </h1>
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
-        <li><a class="nav-link scrollto active" >Accueil</a></li>
-        <li><a class="nav-link scrollto">Medicament</a></li>
+        <li><a class="nav-link scrollto" routerLink="/home">Accueil</a></li>
+        <li><a class="nav-link scrollto" routerLink="/liste">Medicament</a></li>
         <li><a class="nav-link scrollto">Pharmacie de garde</a></li>
-        <li><a class="nav-link scrollto">Blog</a></li>
+        <li><a class="nav-link scrollto" routerLink="/blog">Blog</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>
 
-    <button  class="appointment-btn scrollto btn btn-primary">
+    <button
+      class="appointment-btn scrollto btn btn-primary" routerLink="login"
+    >
       Mon Compte
       <i class="las la-user"></i>
     </button>
-    <button  class="appointment-btn scrollto btn btn-primary">
+    <button class="appointment-btn scrollto btn btn-primary">
       Pannier
       <i class="las la-cart-plus icon"></i>
       <div class="badge bg-danger">0</div>
     </button>
   </div>
 </header>
+
