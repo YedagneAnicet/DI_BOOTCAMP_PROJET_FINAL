@@ -21,10 +21,10 @@
     </h1>
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
-        <li><a class="nav-link scrollto" routerLink="/home">Accueil</a></li>
-        <li><a class="nav-link scrollto" routerLink="/liste">Medicament</a></li>
+        <li><a class="nav-link scrollto" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLinkActiveClass="active">Accueil</a></li>
+        <li><a class="nav-link scrollto" routerLink="/liste" routerLinkActive="active" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLinkActiveClass="active">Medicament</a></li>
         <li><a class="nav-link scrollto">Pharmacie de garde</a></li>
-        <li><a class="nav-link scrollto" routerLink="/blog">Blog</a></li>
+        <li><a class="nav-link scrollto " routerLink="/blog" routerLinkActive="active" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLinkActiveClass="active">Blog</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>
@@ -41,5 +41,6 @@
       <div class="badge bg-danger">0</div>
     </button>
   </div>
+
 </header>
 

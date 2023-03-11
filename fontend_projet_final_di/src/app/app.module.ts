@@ -11,6 +11,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { LoginComponent } from './components/login/login.component';
 import { ListProductsComponent } from './pages/list-products/list-products.component';
 import { ListArticleBlogComponent } from './pages/list-article-blog/list-article-blog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ListArticleBlogComponent } from './pages/list-article-blog/list-article
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,43 @@
+<div class="container p-5">
+
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+      Login Form
+  </button>
+
+  </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="exampleModal2Label">Login Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm" #f="ngForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.controls.email.errors }"  id="inputEmail4">
+            <div *ngIf="submitted && f.controls.email.errors" class="invalid-feedback">
+              <div *ngIf="f.controls.email.errors.required">Email is required</div>
+              <div *ngIf="f.controls.email.errors.email">Email must be a valid email address</div>
+           </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.controls.password.errors }" id="inputPassword4">
+            <div *ngIf="submitted && f.controls.password.errors" class="invalid-feedback">
+              <div *ngIf="f.controls.password.errors.required">Password is required</div>
+           </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
