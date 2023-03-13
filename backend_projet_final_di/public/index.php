@@ -374,15 +374,379 @@ $app->get('/api/pharmacies_garde', function (Request $request, Response $respons
     }
 });
 
+//mettre en ajour une pharmacie 
+
+$app->put('/api/pharmacies/update/{id}', function (Request $request, Response $response, array $args) {
+    $pharmacyId = $request->getAttribute('id');
+
+    $data = $request->getParsedBody();
+
+    $nom = $data['nom_pharmacie'];
+    $adresse = $data['adresse_pharmacie'];
+    $ville = $data['ville_pharmacie'];
+    $telephone = $data['telephone_pharmacie'];
+    $email = $data['email_pharmacie'];
+    $role = $data['role'];
+    $garde = $data['de_garde'];
+
+    $sql = "UPDATE pharmacies SET nom_pharmacie = :nom_pharmacie, adresse_pharmacie = :adresse_pharmacie, ville_pharmacie = :ville_pharmacie, telephone_pharmacie = :telephone_pharmacie, email_pharmacie = :email_pharmacie, role = :role, de_garde = :de_garde WHERE id_pharmacie = :id_pharmacie";
+    
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nom_pharmacie', $nom);
+        $stmt->bindParam(':adresse_pharmacie', $adresse);
+        $stmt->bindParam(':ville_pharmacie', $ville);
+        $stmt->bindParam(':telephone_pharmacie', $telephone);
+        $stmt->bindParam(':email_pharmacie', $email);
+        $stmt->bindParam(':role', $role);
+        $stmt->bindParam(':de_garde', $garde);
+        $stmt->bindParam(':id_pharmacie', $pharmacyId);
+
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $db = null;
+
+        if ($rowCount > 0) {
+            $response->getBody()->write(json_encode(array("message" => "La pharmacie a été mise à jour avec succès.")));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "La pharmacie est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
 
 
+//supprimer une pharmacie 
 
+$app->delete('/api/pharmacies/delete/{id}', function (Request $request, Response $response, array $args) {
+    $pharmacyId = $args['id'];
+    $sql = "DELETE FROM pharmacies WHERE id_pharmacie = :id_pharmacie";
+    
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_pharmacie', $pharmacyId);
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $db = null;
 
+        if ($rowCount > 0) {
+            $response->getBody()->write(json_encode(array("message" => "La pharmacie a été supprimée avec succès.")));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "La pharmacie est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
 
-
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
 
 
 //FIN TABLE PHARMACIE
+
+
+
+//ACTION SUR LA TABLE CATEGORIE 
+
+//ajouter une nouvelle categorie
+
+$app->post('/api/categories_add', function (Request $request, Response $response, array $args) {
+
+    $data = $request->getParsedBody();
+    
+    $nom = $data['nom_categorie'];
+   
+
+    // Vérification des paramètres obligatoires
+    if (!isset($nom)) {
+        $error = array(
+            "message" => "Tous les champs obligatoires doivent être fournis"
+        );
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(400);
+    }
+
+
+    $sql = "INSERT INTO categories (nom_categorie) VALUES (:nom_categorie)";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':nom_categorie', $nom);
+
+        $stmt->execute();
+        $lastInsertId = $conn->lastInsertId();
+        $db = null;
+
+        $responseBody = array(
+            "id_categorie" => $lastInsertId,
+            "message" => "Categorie ajoutée avec succès"
+        );
+
+        $response->getBody()->write(json_encode($responseBody));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(201);
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+//selectionner tous les categories 
+$app->get('/api/categories/all', function (Request $request, Response $response, array $args) {
+
+    $sql = "SELECT * FROM categories";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->query($sql);
+        $categories = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        $response->getBody()->write(json_encode($categories));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(200);
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+//selectionner une categories par son id 
+$app->get('/api/categories/{id}', function (Request $request, Response $response, array $args) {
+
+    $categorieId = $request->getAttribute('id');
+
+    $sql = "SELECT * FROM categories WHERE id_categorie = :id_categorie";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_categorie', $categorieId);
+        $stmt->execute();
+        $categories = $stmt->fetch(PDO::FETCH_OBJ);
+        $db = null;
+
+        if ($categories) {
+            $response->getBody()->write(json_encode($categories));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "La categorie est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+//mettre en ajour une categorie 
+
+$app->put('/api/categories/update/{id}', function (Request $request, Response $response, array $args) {
+    $categorieId = $request->getAttribute('id');
+
+    $data = $request->getParsedBody();
+
+    $nom = $data['nom_categorie'];
+
+
+    $sql = "UPDATE categories SET nom_categorie = :nom_categorie WHERE id_categorie = :id_categorie";
+    
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nom_categorie', $nom);
+        $stmt->bindParam(':id_categorie', $categorieId);
+
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $db = null;
+
+        if ($rowCount > 0) {
+            $response->getBody()->write(json_encode(array("message" => "La categorie a été mise à jour avec succès.")));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "La categorie est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+//supprimer une categorie 
+
+$app->delete('/api/categories/delete/{id}', function (Request $request, Response $response, array $args) {
+    $categorieId = $args['id'];
+    $sql = "DELETE FROM categories WHERE id_categorie = :id_categorie";
+    
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_categorie', $categorieId);
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $db = null;
+
+        if ($rowCount > 0) {
+            $response->getBody()->write(json_encode(array("message" => "La categorie a été supprimée avec succès.")));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "La categorie est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+//récupérer les produits par catégorie
+
+$app->get('/api/categories/{id_categorie}/produits', function (Request $request, Response $response, array $args) {
+    $id_categorie = $args['id_categorie'];
+    $sql = "SELECT * FROM produits WHERE id_categorie = :id_categorie";
+    
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_categorie', $id_categorie);
+        $stmt->execute();
+        $produits = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        if ($produits) {
+            $response->getBody()->write(json_encode($produits));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "Aucun produit trouvé pour cette catégorie"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+//FIN TABLE CATEGORIE
+
+
+
+
 
 
 
