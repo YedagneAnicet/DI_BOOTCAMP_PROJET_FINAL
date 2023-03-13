@@ -746,7 +746,253 @@ $app->get('/api/categories/{id_categorie}/produits', function (Request $request,
 
 
 
+// ACTION SUR LA TABLE PRODUIT
 
+
+
+//ajouter une nouvelle produit 
+
+$app->post('/api/produits_add', function (Request $request, Response $response, array $args) {
+
+    $data = $request->getParsedBody();
+    
+    $nom = $data['nom_produit'];
+    $description = $data['description_produit'];
+    $image = $data['image_produit'];
+    $prix = $data['prix_produit'];
+    $quantite = $data['quantite_produit'];
+    $categorie = $data['nom_categorie'];
+ 
+    // Vérification des paramètres obligatoires
+    if (!isset($nom) || !isset($description) || !isset($image) || !isset($prix) || !isset($quantite)) {
+        $error = array(
+            "message" => "Tous les champs obligatoires doivent être fournis"
+        );
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(400);
+    }
+
+
+    $sql ="INSERT INTO produits (nom_produit, description_produit, image_produit, prix_produit, quantite_stock, id_pharmacie, id_categorie)
+    VALUES (:nom_produit, :description_produit, :image_produit, :prix_produit, :quantite_stock, (SELECT id_pharmacie FROM pharmacies WHERE role = 1), (SELECT id_categorie FROM categories WHERE nom_categorie = :nom_categorie))";
+
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':nom_produit', $nom);
+        $stmt->bindParam(':description_produit', $description);
+        $stmt->bindParam(':image_produit', $image);
+        $stmt->bindParam(':prix_produit', $prix);
+        $stmt->bindParam(':quantite_stock', $quantite);
+        $stmt->bindParam(':nom_categorie', $categorie);
+
+        $stmt->execute();
+        $lastInsertId = $conn->lastInsertId();
+        $db = null;
+
+        $responseBody = array(
+            "id_produit" => $lastInsertId,
+            "message" => "produit ajoutée avec succès"
+        );
+
+        $response->getBody()->write(json_encode($responseBody));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(201);
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+//selectionner tous les produits
+$app->get('/api/produits/all', function (Request $request, Response $response, array $args) {
+
+    $sql = "SELECT * FROM produits";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->query($sql);
+        $produits = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        $response->getBody()->write(json_encode($produits));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(200);
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+//selection une produit avec son id 
+
+$app->get('/api/produits/{id}', function (Request $request, Response $response, array $args) {
+
+    $produitId = $request->getAttribute('id');
+
+    $sql = "SELECT * FROM produits WHERE id_produit = :id_produit";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_produit', $produitId);
+        $stmt->execute();
+        $produit = $stmt->fetch(PDO::FETCH_OBJ);
+        $db = null;
+
+        if ($produit) {
+            $response->getBody()->write(json_encode($produit));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "La pharmacie est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+// mettre a jour un produits
+$app->put('/api/produits/update/{id}', function (Request $request, Response $response, array $args) {
+    $produitId = $request->getAttribute('id');
+    $data = $request->getParsedBody();
+    
+    $nom = $data['nom_produit'];
+    $description = $data['description_produit'];
+    $image = $data['image_produit'];
+    $prix = $data['prix_produit'];
+    $quantite = $data['quantite_produit'];
+    $categorie = $data['nom_categorie'];
+ 
+
+    $sql ="UPDATE produits SET nom_produit =:nom_produit, description_produit =:description_produit , image_produit= :image_produit, prix_produit=:prix_produit, quantite_stock=:quantite_stock, id_pharmacie =(SELECT id_pharmacie FROM pharmacies WHERE role = 1), id_categorie =(SELECT id_categorie FROM categories WHERE nom_categorie = :nom_categorie) WHERE id_produit = :id_produit";
+   
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':nom_produit', $nom);
+        $stmt->bindParam(':description_produit', $description);
+        $stmt->bindParam(':image_produit', $image);
+        $stmt->bindParam(':prix_produit', $prix);
+        $stmt->bindParam(':quantite_stock', $quantite);
+        $stmt->bindParam(':nom_categorie', $categorie);
+        $stmt->bindParam(':id_produit', $produitId);
+
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $db = null;
+
+        if ($rowCount > 0) {
+            $response->getBody()->write(json_encode(array("message" => "La pharmacie a été mise à jour avec succès.")));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "La pharmacie est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+// supprimer un produit
+
+$app->delete('/api/produits/delete/{id}', function (Request $request, Response $response, array $args) {
+    $produitId = $args['id'];
+    $sql = "DELETE FROM produits WHERE id_produit = :id_produit";
+    
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_produit', $produitId);
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $db = null;
+
+        if ($rowCount > 0) {
+            $response->getBody()->write(json_encode(array("message" => "Le produit a été supprimée avec succès.")));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "Le produit est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+
+
+// FIN TABLE PRODUITS
 
 
 
