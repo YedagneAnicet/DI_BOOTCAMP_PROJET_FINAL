@@ -111,7 +111,9 @@ $app->post('/api/utilisateurs/connexion', function (Request $request, Response $
             'email' => $utilisateur['email_utilisateur']
         );
 
-        $jeton = JWT::encode($jeton_payload, 'ymaa', true);
+        $secret_key = bin2hex(random_bytes(16)); // génère une clé secrète de 32 caractères hexadécimaux (16 octets)
+
+        $jeton = JWT::encode($jeton_payload, $secret_key, 'HS256');
 
         $response_data = array(
             'jeton' => $jeton
@@ -130,6 +132,52 @@ $app->post('/api/utilisateurs/connexion', function (Request $request, Response $
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(500);
+    } catch (Exception $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(401);
+    }
+});
+
+
+$app->post('/api/utilisateurs/deconnexion', function (Request $request, Response $response, array $args) {
+    // Récupérer le jeton d'authentification dans les en-têtes de la requête
+    $jeton = $request->getHeader('Authorization')[0] ?? '';
+
+    // Vérifier si le jeton est présent
+    if (!$jeton) {
+        $error = array(
+            "message" => "Vous devez être connecté pour pouvoir vous déconnecter."
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(401);
+    }
+
+    try {
+        // Décoder le jeton et récupérer l'ID de l'utilisateur
+        $secret_key = bin2hex(random_bytes(16));
+        $jeton_payload = JWT::decode($jeton, $secret_key, 'HS256');
+        $id_utilisateur = $jeton_payload->id_utilisateur;
+
+        // Supprimer le jeton d'authentification stocké côté client
+        setcookie('jeton', '', time() - 3600, '/');
+
+        $response_data = array(
+            'message' => 'Vous avez été déconnecté avec succès.'
+        );
+        $response->getBody()->write(json_encode($response_data));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(200);
+
     } catch (Exception $e) {
         $error = array(
             "message" => $e->getMessage()
