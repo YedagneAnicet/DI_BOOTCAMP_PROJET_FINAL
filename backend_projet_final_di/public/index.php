@@ -988,20 +988,10 @@ $app->delete('/api/produits/delete/{id}', function (Request $request, Response $
             ->withStatus(500);
     }
 });
-
-
-
-
 // FIN TABLE PRODUITS
 
 
 
-
-
 //FIN DE L'API
-
-
-
-
 
 $app->run();
