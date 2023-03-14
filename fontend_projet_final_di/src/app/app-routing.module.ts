@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { ListProductsComponent } from './pages/list-products/list-products.component';
 import { PannierComponent } from './pages/pannier/pannier.component';
+import { ListePharmacieComponent } from './pages/liste-pharmacie/liste-pharmacie.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'home' ,  pathMatch: 'full'},
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path:'liste', component:ListProductsComponent},
   {path:'blog', component:ListArticleBlogComponent},
   {path : 'login', component:LoginComponent},
-  {path : 'pannier', component : PannierComponent }
+  {path : 'pannier', component : PannierComponent },
+  {path : 'garde', component:ListePharmacieComponent}
 ];
 
 @NgModule({

@@ -13,6 +13,7 @@ import { ListProductsComponent } from './pages/list-products/list-products.compo
 import { ListArticleBlogComponent } from './pages/list-article-blog/list-article-blog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PannierComponent } from './pages/pannier/pannier.component';
+import { ListePharmacieComponent } from './pages/liste-pharmacie/liste-pharmacie.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { PannierComponent } from './pages/pannier/pannier.component';
     ListProductsComponent,
     ListArticleBlogComponent,
     PannierComponent,
+    ListePharmacieComponent,
   ],
   imports: [
     BrowserModule,
