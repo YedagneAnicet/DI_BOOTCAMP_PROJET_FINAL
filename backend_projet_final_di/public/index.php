@@ -1,7 +1,7 @@
 <?php
 
 Header('Access-Control-Allow-Origin : *');
-Header('Access-Control-Allow-Headers : X-Requested-With, Content-Type, Accept, Origin, Authorization');
+Header('Access-Control-Allow-Headers : *');
 Header('Access-Control-Allow-Methods : GET, POST, PUT, DELETE, PATCH, OPTIONS');
 
 
