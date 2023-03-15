@@ -20,7 +20,8 @@
       </div>
 
       <div class="modal-body p-5 pt-0">
-        <form [formGroup]="FormUtilisateur" (ngSubmit)="onSubmit()">
+        <div class="text-center text-success w-100 mb-3">{{ message }}</div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <div class="form-floating mb-3">
             <input
               type="text"

@@ -20,26 +20,48 @@
       </div>
 
       <div class="modal-body p-5 pt-0">
-        <form class="">
+        <form
+          class=""
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()"
+        >
           <div class="form-floating mb-3">
             <input
               type="email"
               class="form-control rounded-3"
               id="floatingInput"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
             />
             <label for="floatingInput">Email</label>
+            <div
+              *ngIf="submitted && f['email'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['email'].errors['required']">champ requis</div>
+            </div>
           </div>
           <div class="form-floating mb-3">
             <input
               type="password"
               class="form-control rounded-3"
               id="floatingPassword"
+              formControlName="mdp"
+              [ngClass]="{ 'is-invalid': submitted && f['mdp'].errors }"
             />
             <label for="floatingPassword">Mot de passe </label>
+            <div
+              *ngIf="submitted && f['email'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['email'].errors['required']">
+                le mot de passe doit contenir au moins 8 caracteres
+              </div>
+            </div>
           </div>
           <div class="checkbox mb-3">
             <label>
-              <input type="checkbox" value="remember-me"> se souvenir de moi
+              <input type="checkbox" value="remember-me" /> se souvenir de moi
             </label>
           </div>
           <button
@@ -50,9 +72,7 @@
           </button>
           <hr class="my-4" />
           <div class="text-end">
-            <small class="text-muted"
-              >Pas de compte</small
-            >
+            <small class="text-muted">Pas de compte</small>
             <a
               class="btn text-primary fs-5 fw-bold mb-3 appointment-btn scrollto"
               data-bs-toggle="modal"

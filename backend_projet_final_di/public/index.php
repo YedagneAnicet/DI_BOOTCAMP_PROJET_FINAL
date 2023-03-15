@@ -213,12 +213,11 @@ $app->post('/api/pharmacies/add', function (Request $request, Response $response
     $adresse = $data['adresse_pharmacie'];
     $ville = $data['ville_pharmacie'];
     $telephone = $data['telephone_pharmacie'];
-    $email = $data['email_pharmacie'];
     $role = $data['role'];
     $garde = $data['de_garde'];
 
     // Vérification des paramètres obligatoires
-    if (!isset($nom) || !isset($adresse) || !isset($ville) || !isset($telephone) || !isset($email)) {
+    if (!isset($nom) || !isset($adresse) || !isset($ville) || !isset($telephone)) {
         $error = array(
             "message" => "Tous les champs obligatoires doivent être fournis"
         );
@@ -236,7 +235,7 @@ $app->post('/api/pharmacies/add', function (Request $request, Response $response
         $garde = 0;
     }
 
-    $sql = "INSERT INTO pharmacies (nom_pharmacie, adresse_pharmacie, ville_pharmacie, telephone_pharmacie, email_pharmacie, role, de_garde) VALUES (:nom_pharmacie, :adresse_pharmacie, :ville_pharmacie, :telephone_pharmacie, :email_pharmacie, :role, :de_garde)";
+    $sql = "INSERT INTO pharmacies (nom_pharmacie, adresse_pharmacie, ville_pharmacie, telephone_pharmacie, role, de_garde) VALUES (:nom_pharmacie, :adresse_pharmacie, :ville_pharmacie, :telephone_pharmacie,:role, :de_garde)";
 
     try {
         $db = new DB();
@@ -247,7 +246,6 @@ $app->post('/api/pharmacies/add', function (Request $request, Response $response
         $stmt->bindParam(':adresse_pharmacie', $adresse);
         $stmt->bindParam(':ville_pharmacie', $ville);
         $stmt->bindParam(':telephone_pharmacie', $telephone);
-        $stmt->bindParam(':email_pharmacie', $email);
         $stmt->bindParam(':role', $role);
         $stmt->bindParam(':de_garde', $garde);
 
@@ -391,11 +389,10 @@ $app->put('/api/pharmacies/update/{id}', function (Request $request, Response $r
     $adresse = $data['adresse_pharmacie'];
     $ville = $data['ville_pharmacie'];
     $telephone = $data['telephone_pharmacie'];
-    $email = $data['email_pharmacie'];
     $role = $data['role'];
     $garde = $data['de_garde'];
 
-    $sql = "UPDATE pharmacies SET nom_pharmacie = :nom_pharmacie, adresse_pharmacie = :adresse_pharmacie, ville_pharmacie = :ville_pharmacie, telephone_pharmacie = :telephone_pharmacie, email_pharmacie = :email_pharmacie, role = :role, de_garde = :de_garde WHERE id_pharmacie = :id_pharmacie";
+    $sql = "UPDATE pharmacies SET nom_pharmacie = :nom_pharmacie, adresse_pharmacie = :adresse_pharmacie, ville_pharmacie = :ville_pharmacie, telephone_pharmacie = :telephone_pharmacie, role = :role, de_garde = :de_garde WHERE id_pharmacie = :id_pharmacie";
 
     try {
         $db = new DB();
@@ -405,7 +402,6 @@ $app->put('/api/pharmacies/update/{id}', function (Request $request, Response $r
         $stmt->bindParam(':adresse_pharmacie', $adresse);
         $stmt->bindParam(':ville_pharmacie', $ville);
         $stmt->bindParam(':telephone_pharmacie', $telephone);
-        $stmt->bindParam(':email_pharmacie', $email);
         $stmt->bindParam(':role', $role);
         $stmt->bindParam(':de_garde', $garde);
         $stmt->bindParam(':id_pharmacie', $pharmacyId);

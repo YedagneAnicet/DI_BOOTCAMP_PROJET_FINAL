@@ -8,8 +8,9 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  FormUtilisateur!: FormGroup;
+  registerForm!: FormGroup;
   submitted = false
+  message !: string
 
   constructor(
     private _fb: FormBuilder,
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.FormUtilisateur = this._fb.group({
+    this.registerForm = this._fb.group({
       nom: [null, [Validators.required, Validators.minLength(3)]],
       prenoms: [null, [Validators.required, Validators.minLength(3)]],
       adresse: [null, [Validators.required, Validators.minLength(3)]],
@@ -29,19 +30,30 @@ export class RegisterComponent implements OnInit {
   }
 
   get f(): { [key: string]: AbstractControl } {
-    return this.FormUtilisateur.controls;
+    return this.registerForm.controls;
   }
 
   onSubmit() {
     this.submitted = true
-    const utilisateur = this.FormUtilisateur.value;
+    const utilisateur = this.registerForm.value;
     this._utilisateur.inscription(utilisateur).subscribe(
       (response) => {
         console.log(response);
+        this.message = 'compte creer avec sucess'
       },
       (error) => {
         console.log(error);
       }
     );
+
+    this.registerForm = this._fb.group({
+      nom: [null],
+      prenoms: [null],
+      adresse: [null],
+      ville: [null],
+      telephone: [null],
+      email: [null],
+      mdp: [null],
+    });
   }
 }
