@@ -1,6 +1,6 @@
 import { UtilisateurService } from './../../services/utilisateur.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -9,36 +9,38 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   FormUtilisateur!: FormGroup;
-  message !: string;
+  submitted = false
 
-  constructor(private _fb: FormBuilder, private _utilisateur : UtilisateurService) {}
+  constructor(
+    private _fb: FormBuilder,
+    private _utilisateur: UtilisateurService
+  ) {}
 
   ngOnInit(): void {
     this.FormUtilisateur = this._fb.group({
-      nom: [null],
-      prenoms: [null],
-      adresse: [null],
-      ville: [null],
-      telephone: [null],
-      email: [null],
-      mdp: [null],
+      nom: [null, [Validators.required, Validators.minLength(3)]],
+      prenoms: [null, [Validators.required, Validators.minLength(3)]],
+      adresse: [null, [Validators.required, Validators.minLength(3)]],
+      ville: [null, [Validators.required, Validators.minLength(3)]],
+      telephone: [null, [Validators.required, Validators.minLength(3)]],
+      email: [null, [Validators.required, Validators.email]],
+      mdp: [null, [Validators.required, Validators.minLength(8)]],
     });
   }
 
-
+  get f(): { [key: string]: AbstractControl } {
+    return this.FormUtilisateur.controls;
+  }
 
   onSubmit() {
+    this.submitted = true
     const utilisateur = this.FormUtilisateur.value;
     this._utilisateur.inscription(utilisateur).subscribe(
       (response) => {
         console.log(response);
-        this.message = 'Votre compte a été créé avec succès.';
-        console.log(this.message )
       },
       (error) => {
         console.log(error);
-        this.message = 'Une erreur est survenue lors de la création de votre compte.';
-        console.log(this.message )
       }
     );
   }

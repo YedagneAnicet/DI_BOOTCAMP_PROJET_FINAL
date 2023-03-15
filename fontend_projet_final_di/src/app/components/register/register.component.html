@@ -27,8 +27,12 @@
               class="form-control rounded-3"
               id="floatingInput"
               formControlName="nom"
+              [ngClass]="{ 'is-invalid': submitted && f['nom'].errors }"
             />
             <label for="floatingInput">Nom </label>
+            <div *ngIf="submitted && f['nom'].errors" class="invalid-feedback">
+              <div *ngIf="f['nom'].errors['required']">champ requis</div>
+            </div>
           </div>
           <div class="form-floating mb-3">
             <input
@@ -36,8 +40,15 @@
               class="form-control rounded-3"
               id="floatingInput"
               formControlName="prenoms"
+              [ngClass]="{ 'is-invalid': submitted && f['prenoms'].errors }"
             />
             <label for="floatingInput">Prenoms </label>
+            <div
+              *ngIf="submitted && f['prenoms'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['prenoms'].errors['required']">champ requis</div>
+            </div>
           </div>
           <div class="form-floating mb-3">
             <input
@@ -45,8 +56,15 @@
               class="form-control rounded-3"
               id="floatingInput"
               formControlName="adresse"
+              [ngClass]="{ 'is-invalid': submitted && f['adresse'].errors }"
             />
             <label for="floatingInput">Adresse </label>
+            <div
+              *ngIf="submitted && f['adresse'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['adresse'].errors['required']">champ requis</div>
+            </div>
           </div>
           <div class="form-floating mb-3">
             <input
@@ -54,8 +72,15 @@
               class="form-control rounded-3"
               id="floatingInput"
               formControlName="ville"
+              [ngClass]="{ 'is-invalid': submitted && f['ville'].errors }"
             />
             <label for="floatingInput">Ville </label>
+            <div
+              *ngIf="submitted && f['ville'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['ville'].errors['required']">champ requis</div>
+            </div>
           </div>
 
           <div class="form-floating mb-3">
@@ -64,8 +89,15 @@
               class="form-control rounded-3"
               id="floatingInput"
               formControlName="telephone"
+              [ngClass]="{ 'is-invalid': submitted && f['telephone'].errors }"
             />
             <label for="floatingInput">Telephone </label>
+            <div
+              *ngIf="submitted && f['telephone'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['telephone'].errors['required']">champ requis</div>
+            </div>
           </div>
           <div class="form-floating mb-3">
             <input
@@ -73,8 +105,15 @@
               class="form-control rounded-3"
               id="floatingInput"
               formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
             />
             <label for="floatingInput">Email</label>
+            <div
+              *ngIf="submitted && f['email'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['email'].errors['required']">champ requis</div>
+            </div>
           </div>
           <div class="form-floating mb-3">
             <input
@@ -82,8 +121,17 @@
               class="form-control rounded-3"
               id="floatingPassword"
               formControlName="mdp"
+              [ngClass]="{ 'is-invalid': submitted && f['mdp'].errors }"
             />
             <label for="floatingPassword">Mot de passe </label>
+            <div
+              *ngIf="submitted && f['email'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['email'].errors['required']">
+                le mot de passe doit contenir au moins 8 caracteres
+              </div>
+            </div>
           </div>
           <button
             class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
