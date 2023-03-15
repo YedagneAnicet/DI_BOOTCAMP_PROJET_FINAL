@@ -1,18 +1,21 @@
 <div
-  class="modal modal-signin position-static d-block bg-light py-5"
+  class="modal fade"
+  id="login"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
   tabindex="-1"
-  role="dialog"
-  id="modalSignin"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
 >
   <div class="modal-dialog" role="document">
     <div class="modal-content rounded-4 shadow">
       <div class="modal-header p-5 pb-4 border-bottom-0">
-        <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
-        <h1 class="fw-bold mb-0 fs-2 text-center">Connexion</h1>
+        <h1 class="fw-bold mb-0 fs-2">Se connecter</h1>
         <button
           type="button"
           class="btn-close"
-          routerLink="/home"
+          data-bs-dismiss="modal"
+          aria-label="Close"
         ></button>
       </div>
 
@@ -23,43 +26,43 @@
               type="email"
               class="form-control rounded-3"
               id="floatingInput"
-              placeholder="name@example.com"
             />
-            <label for="floatingInput">Email address</label>
+            <label for="floatingInput">Email</label>
           </div>
           <div class="form-floating mb-3">
             <input
               type="password"
               class="form-control rounded-3"
               id="floatingPassword"
-              placeholder="Password"
             />
-            <label for="floatingPassword">Password</label>
+            <label for="floatingPassword">Mot de passe </label>
+          </div>
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"> se souvenir de moi
+            </label>
           </div>
           <button
             class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
             type="submit"
           >
-            Connexion
+            Se connecter
           </button>
-          <small class="text-muted"
-            >By clicking Sign up, you agree to the terms of use.</small
-          >
           <hr class="my-4" />
-          <button
-            class="w-100 py-2 mb-2 btn btn-outline-dark rounded-3"
-            type="submit"
-          >
-           Connexion avec facebook
-          </button>
-          <button
-            class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3"
-            type="submit"
-          >
-            Connexion avec google
-          </button>
+          <div class="text-end">
+            <small class="text-muted"
+              >Pas de compte</small
+            >
+            <a
+              class="btn text-primary fs-5 fw-bold mb-3 appointment-btn scrollto"
+              data-bs-toggle="modal"
+              data-bs-target="#register"
+              >S'inscrire</a
+            >
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+<app-register></app-register>

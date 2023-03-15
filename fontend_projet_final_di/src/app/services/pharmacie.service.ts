@@ -33,23 +33,19 @@ export class PharmacieService {
 
   updatePharmacy(id: number, pharmacy: any): Observable<any> {
     const url = `${this.apiUrl}/update/${id}`;
-    return this.http
-      .put(url, pharmacy)
-      .pipe(
-        catchError(error => {
-          return throwError(error.json().error  || 'Server error');
-        })
-      );
+    return this.http.put(url, pharmacy).pipe(
+      catchError((error) => {
+        throw new Error(error.json().error || 'Server error');
+      })
+    );
   }
 
   deletePharmacy(id: number): Observable<any> {
     const url = `${this.apiUrl}/delete/${id}`;
-    return this.http
-      .delete(url)
-      .pipe(
-        catchError((error: any) =>
-          throwError(error.json().error || 'Server error')
-        )
-      );
+    return this.http.delete(url).pipe(
+      catchError((error) => {
+        throw new Error(error.json().error || 'Server error');
+      })
+    );
   }
 }

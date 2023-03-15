@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,8 @@ import { ListArticleBlogComponent } from './pages/list-article-blog/list-article
 import { ReactiveFormsModule } from '@angular/forms';
 import { PannierComponent } from './pages/pannier/pannier.component';
 import { ListePharmacieComponent } from './pages/liste-pharmacie/liste-pharmacie.component';
+import { RegisterComponent } from './components/register/register.component';
+import { CorsInterceptor } from './cors.interceptor';
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import { ListePharmacieComponent } from './pages/liste-pharmacie/liste-pharmacie
     ListArticleBlogComponent,
     PannierComponent,
     ListePharmacieComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,7 @@ import { ListePharmacieComponent } from './pages/liste-pharmacie/liste-pharmacie
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

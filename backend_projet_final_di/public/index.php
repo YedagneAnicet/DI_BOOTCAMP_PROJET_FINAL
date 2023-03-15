@@ -1,5 +1,10 @@
 <?php
 
+Header('Access-Control-Allow-Origin : *');
+Header('Access-Control-Allow-Headers : X-Requested-With, Content-Type, Accept, Origin, Authorization');
+Header('Access-Control-Allow-Methods : GET, POST, PUT, DELETE, PATCH, OPTIONS');
+
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 require_once __DIR__ . '/../src/Models/Db.php';
@@ -175,6 +180,7 @@ $app->post('/api/utilisateurs/deconnexion', function (Request $request, Response
         );
         $response->getBody()->write(json_encode($response_data));
         return $response
+
             ->withHeader('content-type', 'application/json')
             ->withStatus(200);
 
@@ -498,7 +504,7 @@ $app->post('/api/categories/add', function (Request $request, Response $response
             "message" => "Tous les champs obligatoires doivent être fournis"
         );
         $response->getBody()->write(json_encode($error));
-        return $response
+        return $response->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('content-type', 'application/json')
             ->withStatus(400);
     }
@@ -994,7 +1000,7 @@ $app->delete('/api/produits/delete/{id}', function (Request $request, Response $
 
 //ajouter un nouvel article 
 
-$app->post('/api/article_add', function (Request $request, Response $response, array $args) {
+$app->post('/api/articles/add', function (Request $request, Response $response, array $args) {
 
     $data = $request->getParsedBody();
 

@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  })
+};
 @Injectable({
   providedIn: 'root'
 })
 export class UtilisateurService {
-  private apiUrl = 'http://localhost:8080/api/pharmacies';
+  private apiUrl = 'http://localhost:8080/api/utilisateurs';
 
   constructor(private http: HttpClient) { }
 
   inscription(utilisateur: any): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
+
     return this.http.post<any>(`${this.apiUrl}/inscription`, utilisateur, httpOptions);
   }
 
