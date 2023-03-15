@@ -202,7 +202,7 @@ $app->post('/api/utilisateurs/deconnexion', function (Request $request, Response
 $app->post('/api/pharmacies_add', function (Request $request, Response $response, array $args) {
 
     $data = $request->getParsedBody();
-    
+
     $nom = $data['nom_pharmacie'];
     $adresse = $data['adresse_pharmacie'];
     $ville = $data['ville_pharmacie'];
@@ -222,11 +222,11 @@ $app->post('/api/pharmacies_add', function (Request $request, Response $response
             ->withStatus(400);
     }
 
-    if(!isset($role)){
+    if (!isset($role)) {
         $role = 0;
     }
 
-    if(!isset($garde)){
+    if (!isset($garde)) {
         $garde = 0;
     }
 
@@ -390,7 +390,7 @@ $app->put('/api/pharmacies/update/{id}', function (Request $request, Response $r
     $garde = $data['de_garde'];
 
     $sql = "UPDATE pharmacies SET nom_pharmacie = :nom_pharmacie, adresse_pharmacie = :adresse_pharmacie, ville_pharmacie = :ville_pharmacie, telephone_pharmacie = :telephone_pharmacie, email_pharmacie = :email_pharmacie, role = :role, de_garde = :de_garde WHERE id_pharmacie = :id_pharmacie";
-    
+
     try {
         $db = new DB();
         $conn = $db->connect();
@@ -440,7 +440,7 @@ $app->put('/api/pharmacies/update/{id}', function (Request $request, Response $r
 $app->delete('/api/pharmacies/delete/{id}', function (Request $request, Response $response, array $args) {
     $pharmacyId = $args['id'];
     $sql = "DELETE FROM pharmacies WHERE id_pharmacie = :id_pharmacie";
-    
+
     try {
         $db = new DB();
         $conn = $db->connect();
@@ -488,9 +488,9 @@ $app->delete('/api/pharmacies/delete/{id}', function (Request $request, Response
 $app->post('/api/categories_add', function (Request $request, Response $response, array $args) {
 
     $data = $request->getParsedBody();
-    
+
     $nom = $data['nom_categorie'];
-   
+
 
     // Vérification des paramètres obligatoires
     if (!isset($nom)) {
@@ -621,7 +621,7 @@ $app->put('/api/categories/update/{id}', function (Request $request, Response $r
 
 
     $sql = "UPDATE categories SET nom_categorie = :nom_categorie WHERE id_categorie = :id_categorie";
-    
+
     try {
         $db = new DB();
         $conn = $db->connect();
@@ -665,7 +665,7 @@ $app->put('/api/categories/update/{id}', function (Request $request, Response $r
 $app->delete('/api/categories/delete/{id}', function (Request $request, Response $response, array $args) {
     $categorieId = $args['id'];
     $sql = "DELETE FROM categories WHERE id_categorie = :id_categorie";
-    
+
     try {
         $db = new DB();
         $conn = $db->connect();
@@ -706,7 +706,7 @@ $app->delete('/api/categories/delete/{id}', function (Request $request, Response
 $app->get('/api/categories/{id_categorie}/produits', function (Request $request, Response $response, array $args) {
     $id_categorie = $args['id_categorie'];
     $sql = "SELECT * FROM produits WHERE id_categorie = :id_categorie";
-    
+
     try {
         $db = new DB();
         $conn = $db->connect();
@@ -755,14 +755,14 @@ $app->get('/api/categories/{id_categorie}/produits', function (Request $request,
 $app->post('/api/produits_add', function (Request $request, Response $response, array $args) {
 
     $data = $request->getParsedBody();
-    
+
     $nom = $data['nom_produit'];
     $description = $data['description_produit'];
     $image = $data['image_produit'];
     $prix = $data['prix_produit'];
     $quantite = $data['quantite_produit'];
     $categorie = $data['nom_categorie'];
- 
+
     // Vérification des paramètres obligatoires
     if (!isset($nom) || !isset($description) || !isset($image) || !isset($prix) || !isset($quantite)) {
         $error = array(
@@ -775,7 +775,7 @@ $app->post('/api/produits_add', function (Request $request, Response $response, 
     }
 
 
-    $sql ="INSERT INTO produits (nom_produit, description_produit, image_produit, prix_produit, quantite_stock, id_pharmacie, id_categorie)
+    $sql = "INSERT INTO produits (nom_produit, description_produit, image_produit, prix_produit, quantite_stock, id_pharmacie, id_categorie)
     VALUES (:nom_produit, :description_produit, :image_produit, :prix_produit, :quantite_stock, (SELECT id_pharmacie FROM pharmacies WHERE role = 1), (SELECT id_categorie FROM categories WHERE nom_categorie = :nom_categorie))";
 
 
@@ -893,17 +893,17 @@ $app->get('/api/produits/{id}', function (Request $request, Response $response, 
 $app->put('/api/produits/update/{id}', function (Request $request, Response $response, array $args) {
     $produitId = $request->getAttribute('id');
     $data = $request->getParsedBody();
-    
+
     $nom = $data['nom_produit'];
     $description = $data['description_produit'];
     $image = $data['image_produit'];
     $prix = $data['prix_produit'];
     $quantite = $data['quantite_produit'];
     $categorie = $data['nom_categorie'];
- 
 
-    $sql ="UPDATE produits SET nom_produit =:nom_produit, description_produit =:description_produit , image_produit= :image_produit, prix_produit=:prix_produit, quantite_stock=:quantite_stock, id_pharmacie =(SELECT id_pharmacie FROM pharmacies WHERE role = 1), id_categorie =(SELECT id_categorie FROM categories WHERE nom_categorie = :nom_categorie) WHERE id_produit = :id_produit";
-   
+
+    $sql = "UPDATE produits SET nom_produit =:nom_produit, description_produit =:description_produit , image_produit= :image_produit, prix_produit=:prix_produit, quantite_stock=:quantite_stock, id_pharmacie =(SELECT id_pharmacie FROM pharmacies WHERE role = 1), id_categorie =(SELECT id_categorie FROM categories WHERE nom_categorie = :nom_categorie) WHERE id_produit = :id_produit";
+
     try {
         $db = new DB();
         $conn = $db->connect();
@@ -953,7 +953,7 @@ $app->put('/api/produits/update/{id}', function (Request $request, Response $res
 $app->delete('/api/produits/delete/{id}', function (Request $request, Response $response, array $args) {
     $produitId = $args['id'];
     $sql = "DELETE FROM produits WHERE id_produit = :id_produit";
-    
+
     try {
         $db = new DB();
         $conn = $db->connect();
@@ -989,6 +989,315 @@ $app->delete('/api/produits/delete/{id}', function (Request $request, Response $
     }
 });
 // FIN TABLE PRODUITS
+
+
+
+// ACTION SUR LA TABLE ARTICLE
+
+
+
+//ajouter un nouvel article 
+
+$app->post('/api/article_add', function (Request $request, Response $response, array $args) {
+
+    $data = $request->getParsedBody();
+
+    $titre = $data['titre_article'];
+    $description = $data['description_article'];
+    $image = $data['image_article'];
+    $date = $data['date_creation'];
+    $nombre_like = $data['nombre_like'];
+
+    // Vérification des paramètres obligatoires
+    if (!isset($titre) || !isset($description) || !isset($image) || !isset($date) || !isset($nombre_like)) {
+        $error = array(
+            "message" => "Tous les champs obligatoires doivent être fournis"
+        );
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(400);
+    }
+
+
+    $sql = "INSERT INTO articles_blog (titre_artcile, description_description, image_article, date_creation, nombre_like, id_pharmacie)
+    VALUES (:titre_article, :description_article, :image_article, :date_creation, :nombre_like, (SELECT id_pharmacie FROM pharmacies WHERE role = 1))";
+
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':titre_article', $titre);
+        $stmt->bindParam(':description_article', $description);
+        $stmt->bindParam(':image_article', $image);
+        $stmt->bindParam(':date_creation', $date);
+        $stmt->bindParam(':nombre_like,', $nombre_like);
+
+        $stmt->execute();
+        $lastInsertId = $conn->lastInsertId();
+        $db = null;
+
+        $responseBody = array(
+            "id_article" => $lastInsertId,
+            "message" => "article ajoutée avec succès"
+        );
+
+        $response->getBody()->write(json_encode($responseBody));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(201);
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+//selection un article avec son id 
+
+$app->get('/api/articles/{id}', function (Request $request, Response $response, array $args) {
+
+    $articleId = $request->getAttribute('id');
+
+    $sql = "SELECT * FROM articles_blog WHERE id_article = :id_article";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_article', $articleId);
+        $stmt->execute();
+        $article = $stmt->fetch(PDO::FETCH_OBJ);
+        $db = null;
+
+        if ($article) {
+            $response->getBody()->write(json_encode($article));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "La pharmacie est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+
+// mettre a jour un article
+
+$app->put('/api/article/update/{id}', function (Request $request, Response $response, array $args) {
+    $articleId = $request->getAttribute('id');
+    $data = $request->getParsedBody();
+
+    $titre = $data['titre_article'];
+    $description = $data['description_article'];
+    $image = $data['image_article'];
+    $date = $data['date_creation'];
+    $nombre_like = $data['nombre_like'];
+
+    $sql = "UPDATE articles_blog SET titre_artcile =:titre_article, description_article =:description_article , image_article= :image_article, date_creation=:date_creation, nombre_like=:nombre_like, id_pharmacie =(SELECT id_pharmacie FROM pharmacies WHERE role = 1)";
+
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':titre_article', $titre);
+        $stmt->bindParam(':description_article', $description);
+        $stmt->bindParam(':image_article', $image);
+        $stmt->bindParam(':date_creation', $date);
+        $stmt->bindParam(':nombre_like,', $nombre_like);
+        $stmt->bindParam(':id_article', $articleId);
+
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $db = null;
+
+        if ($rowCount > 0) {
+            $response->getBody()->write(json_encode(array("message" => "L'article a été mise à jour avec succès.")));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "L'article est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+// supprimer un produit
+
+$app->delete('/api/articles/delete/{id}', function (Request $request, Response $response, array $args) {
+    $articleId = $args['id'];
+    $sql = "DELETE FROM article_blog WHERE id_article = :id_article";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_article', $articleId);
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $db = null;
+
+        if ($rowCount > 0) {
+            $response->getBody()->write(json_encode(array("message" => "Le produit a été supprimée avec succès.")));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } else {
+            $error = array(
+                "message" => "L'article est introuvable"
+            );
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(404);
+        }
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+// FIN TABLE ARTICLE 
+
+
+
+// ACTION SUR LA TABLE COMMANDE
+
+// pour enregistrer une commande 
+
+$app->post('/api/commandes_add', function (Request $request, Response $response, array $args) {
+
+    $data = $request->getParsedBody();
+
+    $produits = $data['produits']; // tableau d'objets contenant id_produit et quantite_produit
+    $prix_total = $data['prix_total'];
+    $id_utilisateur = $data['id_utilisateur'];
+
+    // Vérification des paramètres obligatoires
+    if (!isset($produits) || !isset($prix_total) || !isset($id_utilisateur)) {
+        $error = array(
+            "message" => "Tous les champs obligatoires doivent être fournis"
+        );
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(400);
+    }
+
+    $statut_commande = "En cours";
+
+    $sql_commande = "INSERT INTO commandes (statut_commande, prix_commande, id_utilisateur)
+    VALUES (:statut_commande, :prix_commande, :id_utilisateur)";
+
+    $sql_commande_produit = "INSERT INTO commande_produit (id_commande, id_produit, quantite_produit)
+    VALUES (:id_commande, :id_produit, :quantite_produit)";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $conn->beginTransaction();
+
+        // Enregistrement de la commande
+        $stmt_commande = $conn->prepare($sql_commande);
+
+        $stmt_commande->bindParam(':statut_commande', $statut_commande);
+        $stmt_commande->bindParam(':prix_commande', $prix_total);
+        $stmt_commande->bindParam(':id_utilisateur', $id_utilisateur);
+
+        $stmt_commande->execute();
+        $lastInsertId = $conn->lastInsertId();
+
+        // Enregistrement des produits de la commande
+        $stmt_commande_produit = $conn->prepare($sql_commande_produit);
+
+        foreach ($produits as $produit) {
+            $id_produit = $produit['id_produit'];
+            $quantite_produit = $produit['quantite_produit'];
+
+            $stmt_commande_produit->bindParam(':id_commande', $lastInsertId);
+            $stmt_commande_produit->bindParam(':id_produit', $id_produit);
+            $stmt_commande_produit->bindParam(':quantite_produit', $quantite_produit);
+
+            $stmt_commande_produit->execute();
+        }
+
+        $conn->commit();
+        $db = null;
+
+        $responseBody = array(
+            "id_commande" => $lastInsertId,
+            "message" => "Commande enregistrée avec succès"
+        );
+
+        $response->getBody()->write(json_encode($responseBody));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(201);
+    } catch (PDOException $e) {
+        $conn->rollBack();
+
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+
+// FIN TABLE COMMANDE
 
 
 
