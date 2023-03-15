@@ -199,7 +199,7 @@ $app->post('/api/utilisateurs/deconnexion', function (Request $request, Response
 
 //ajouter une nouvelle pharmacie 
 
-$app->post('/api/pharmacies_add', function (Request $request, Response $response, array $args) {
+$app->post('/api/pharmacies/add', function (Request $request, Response $response, array $args) {
 
     $data = $request->getParsedBody();
 
@@ -347,7 +347,7 @@ $app->get('/api/pharmacies/{id}', function (Request $request, Response $response
 
 //selectionner la liste de tous les pharmacie de garde 
 
-$app->get('/api/pharmacies_garde', function (Request $request, Response $response, array $args) {
+$app->get('/api/pharmacies/all/garde', function (Request $request, Response $response, array $args) {
 
     $sql = "SELECT * FROM pharmacies WHERE de_garde = 1";
 
@@ -485,7 +485,7 @@ $app->delete('/api/pharmacies/delete/{id}', function (Request $request, Response
 
 //ajouter une nouvelle categorie
 
-$app->post('/api/categories_add', function (Request $request, Response $response, array $args) {
+$app->post('/api/categories/add', function (Request $request, Response $response, array $args) {
 
     $data = $request->getParsedBody();
 
@@ -748,11 +748,9 @@ $app->get('/api/categories/{id_categorie}/produits', function (Request $request,
 
 // ACTION SUR LA TABLE PRODUIT
 
-
-
 //ajouter une nouvelle produit 
 
-$app->post('/api/produits_add', function (Request $request, Response $response, array $args) {
+$app->post('/api/produits/add', function (Request $request, Response $response, array $args) {
 
     $data = $request->getParsedBody();
 
@@ -816,7 +814,6 @@ $app->post('/api/produits_add', function (Request $request, Response $response, 
     }
 });
 
-
 //selectionner tous les produits
 $app->get('/api/produits/all', function (Request $request, Response $response, array $args) {
 
@@ -844,7 +841,6 @@ $app->get('/api/produits/all', function (Request $request, Response $response, a
             ->withStatus(500);
     }
 });
-
 
 //selection une produit avec son id 
 

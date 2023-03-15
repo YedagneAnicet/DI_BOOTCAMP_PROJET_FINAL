@@ -6,36 +6,43 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
-export class ProduitsService {
-  private apiUrl = 'http://localhost:8080/api/produits';
+export class PharmacieService {
+  private apiUrl = 'http://localhost:8080/api/pharmacies';
 
   constructor(private http: HttpClient) {}
 
-  addProduct(product: any): Observable<any> {
+  addPharmacy(pharmacy: any): Observable<any> {
     const url = `${this.apiUrl}/add`;
-    return this.http.post(url, product);
+    return this.http.post(url, pharmacy);
   }
 
-  getAllProducts(): Observable<any> {
+  getAllPharmacies(): Observable<any> {
     const url = `${this.apiUrl}/all`;
     return this.http.get(url);
   }
 
-  getProductById(id: number): Observable<any> {
+  getPharmacyById(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get(url);
   }
 
-  updateProduct(id: number, product: any): Observable<any> {
-    const url = `${this.apiUrl}/update/${id}`;
-    return this.http.put(url, product).pipe(
-      catchError((error) => {
-        return throwError(error.json().error || 'Server error');
-      })
-    );
+  getGardePharmacies(): Observable<any> {
+    const url = `${this.apiUrl}/all/garde`;
+    return this.http.get(url);
   }
 
-  deleteProduct(id: number): Observable<any> {
+  updatePharmacy(id: number, pharmacy: any): Observable<any> {
+    const url = `${this.apiUrl}/update/${id}`;
+    return this.http
+      .put(url, pharmacy)
+      .pipe(
+        catchError(error => {
+          return throwError(error.json().error  || 'Server error');
+        })
+      );
+  }
+
+  deletePharmacy(id: number): Observable<any> {
     const url = `${this.apiUrl}/delete/${id}`;
     return this.http
       .delete(url)
