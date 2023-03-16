@@ -39,13 +39,13 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    
+
     const email = this.loginForm.controls['email'].value;
     const mdp = this.loginForm.controls['mdp'].value;
 
     this._utilisateur.connexion({ email, mdp }).subscribe(
       (data) => {
-        console.log(data);
+        console.log(data.value);
       },
       (error) => {
         this.error = "Nom d'utilisateur ou mot de passe incorrect";

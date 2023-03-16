@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 export class UtilisateurService {
   private apiUrl = 'http://localhost:8080/api/utilisateurs';
 
+  private tokenKey = 'auth-token';
+
   constructor(private http: HttpClient) { }
 
   inscription(utilisateur: any): Observable<any> {
@@ -27,6 +29,7 @@ export class UtilisateurService {
     };
     return this.http.post<any>(`${this.apiUrl}/connexion`, credentials, httpOptions);
   }
+
 
   deconnexion(jeton: string): Observable<any> {
     const httpOptions = {
