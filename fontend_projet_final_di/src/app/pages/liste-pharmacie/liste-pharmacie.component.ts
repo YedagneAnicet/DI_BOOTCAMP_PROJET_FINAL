@@ -9,9 +9,14 @@ import { PharmacieService } from 'src/app/services/pharmacie.service';
 })
 export class ListePharmacieComponent implements OnInit {
   listeCommune!: any;
-  ListePharmacie!: any;
+
+  ListePharmacieGarde!: any;
+
+  ListePharmacieCommune !: any;
 
   FormRecherche!: FormGroup;
+
+  allgarde = true
 
   constructor(
     private _pharmacieService: PharmacieService,
@@ -20,7 +25,7 @@ export class ListePharmacieComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCommune();
-
+    this.getPharmacieGarde()
     this.FormRecherche = this._fb.group({
       commune : [''],
     });
@@ -37,29 +42,32 @@ export class ListePharmacieComponent implements OnInit {
     });
   }
 
-  // getAllPharmacie() {
-  //   this._pharmacieService.getAllPharmacies().subscribe({
-  //     next: (reponse: any) => {
-  //       this.ListePharmacie = reponse;
-  //     },
-  //     error: (error: any) => {
-  //       console.log(error);
-  //     },
-  //   });
-  // }
+  getPharmacieGarde() {
+    this._pharmacieService.getGardePharmacies().subscribe({
+      next: (reponse: any) => {
+        this.ListePharmacieGarde = reponse;
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
 
+
+
+  // obtenir la liste de toutes les pharmacie de garde par commune
   onSubmit() {
     if (this.FormRecherche.invalid) {
       return;
     }
-
+this.allgarde = false
     const commune = this.FormRecherche.controls['commune'].value;
 
     console.log(commune)
 
-    this._pharmacieService.getPharmacyByCommune(commune).subscribe({
+    this._pharmacieService.getPharmaciesByVilleAndGarde(commune).subscribe({
       next: (reponse: any) => {
-        console.log(reponse);
+        this.ListePharmacieCommune = reponse
       },
       error: (error: any) => {
         console.log(error);

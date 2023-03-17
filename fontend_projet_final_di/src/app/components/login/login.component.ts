@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
 
     this._utilisateur.connexion({ email, mdp }).subscribe(
       (data) => {
-        console.log(data.value);
+        console.log(data);
       },
       (error) => {
         this.error = "Nom d'utilisateur ou mot de passe incorrect";

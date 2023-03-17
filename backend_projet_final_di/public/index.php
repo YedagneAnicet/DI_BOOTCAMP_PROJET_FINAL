@@ -304,7 +304,38 @@ $app->get('/api/pharmacies/all', function (Request $request, Response $response,
     }
 });
 
-// sectionner toutes les communes 
+
+//selectionner la liste de tous les pharmacie de garde 
+
+$app->get('/api/pharmacies/all/garde', function (Request $request, Response $response, array $args) {
+
+    $sql = "SELECT * FROM pharmacies WHERE de_garde = 1";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->query($sql);
+        $pharmacies = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        $response->getBody()->write(json_encode($pharmacies));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(200);
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
+
+
+// selectionner toutes les communes 
 $app->get('/api/pharmacies/commune', function (Request $request, Response $response, array $args) {
 
     $sql = "SELECT DISTINCT ville_pharmacie FROM pharmacies ORDER BY ville_pharmacie ASC";
@@ -379,9 +410,9 @@ $app->get('/api/pharmacies/{id}', function (Request $request, Response $response
 
 $app->get('/api/pharmacies/all/{commune}', function (Request $request, Response $response, array $args) {
 
-    $commune = $args['commune'];;
+    $commune = $args['commune'];
 
-    $sql = "SELECT nom_pharmacie, telephone_pharmacie, adresse_pharmacie FROM pharmacies WHERE ville_pharmacie = :commune";
+    $sql = "SELECT nom_pharmacie, telephone_pharmacie, adresse_pharmacie FROM pharmacies WHERE ville_pharmacie=:commune ORDER BY nom_pharmacie ASC";
 
     try {
         $db = new DB();
@@ -389,49 +420,10 @@ $app->get('/api/pharmacies/all/{commune}', function (Request $request, Response 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':commune', $commune);
         $stmt->execute();
-        $pharmacy = $stmt->fetch(PDO::FETCH_OBJ);
+        $pharmacy = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
 
-        if ($pharmacy) {
-            $response->getBody()->write(json_encode($pharmacy));
-            return $response
-                ->withHeader('content-type', 'application/json')
-                ->withStatus(200);
-        } else {
-            $error = array(
-                "message" => "La pharmacie est introuvable"
-            );
-            $response->getBody()->write(json_encode($error));
-            return $response
-                ->withHeader('content-type', 'application/json')
-                ->withStatus(404);
-        }
-    } catch (PDOException $e) {
-        $error = array(
-            "message" => $e->getMessage()
-        );
-
-        $response->getBody()->write(json_encode($error));
-        return $response
-            ->withHeader('content-type', 'application/json')
-            ->withStatus(500);
-    }
-});
-
-//selectionner la liste de tous les pharmacie de garde 
-
-$app->get('/api/pharmacies/all/garde', function (Request $request, Response $response, array $args) {
-
-    $sql = "SELECT * FROM pharmacies WHERE de_garde = 1";
-
-    try {
-        $db = new DB();
-        $conn = $db->connect();
-        $stmt = $conn->query($sql);
-        $pharmacies = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-
-        $response->getBody()->write(json_encode($pharmacies));
+        $response->getBody()->write(json_encode($pharmacy));
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(200);
@@ -446,6 +438,7 @@ $app->get('/api/pharmacies/all/garde', function (Request $request, Response $res
             ->withStatus(500);
     }
 });
+
 
 // selectionner les pharmacies de garde par commune
 $app->get('/api/pharmacies/{ville}/garde', function (Request $request, Response $response, array $args) {

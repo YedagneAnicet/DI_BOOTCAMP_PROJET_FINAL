@@ -41,15 +41,32 @@
         <th scope="col">Nom</th>
         <th scope="col">Contact</th>
         <th scope="col">Localisation</th>
+        <th scope="col">Commune</th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let pharmacie of ListePharmacie; index as i">
-        <td>{{ i + 1 }}</td>
-        <td>{{ pharmacie.nom_pharmacie }}</td>
-        <td>{{ pharmacie.telephone_pharmacie }}</td>
-        <td>{{ pharmacie.adresse_pharmacie }}</td>
-      </tr>
+
+      <ng-container *ngIf="allgarde">
+        <tr *ngFor="let pharmacie of ListePharmacieGarde; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pharmacie.nom_pharmacie }}</td>
+          <td>{{ pharmacie.telephone_pharmacie }}</td>
+          <td>{{ pharmacie.adresse_pharmacie }}</td>
+          <td>{{ pharmacie.ville_pharmacie }}</td>
+        </tr>
+      </ng-container>
+
+
+      <ng-container *ngIf="!allgarde">
+        <tr *ngFor="let pharmacie of ListePharmacieCommune; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pharmacie.nom_pharmacie }}</td>
+          <td>{{ pharmacie.telephone_pharmacie }}</td>
+          <td>{{ pharmacie.adresse_pharmacie }}</td>
+          <td>{{ pharmacie.ville_pharmacie }}</td>
+        </tr>
+      </ng-container>
+
     </tbody>
   </table>
 </div>

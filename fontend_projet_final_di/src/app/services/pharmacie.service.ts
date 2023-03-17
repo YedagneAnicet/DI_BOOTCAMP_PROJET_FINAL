@@ -29,7 +29,7 @@ export class PharmacieService {
     return this.http.get(url);
   }
 
-  // obtenir la liste de tout les pharmacie de garde
+  // obtenir la liste de toutes les pharmacie de garde
   getGardePharmacies(): Observable<any> {
     const url = `${this.apiUrl}/all/garde`;
     return this.http.get(url);
