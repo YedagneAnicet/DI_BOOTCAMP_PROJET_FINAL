@@ -19,6 +19,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { CorsInterceptor } from './cors.interceptor';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,7 @@ import { CorsInterceptor } from './cors.interceptor';
     ListArticleBlogComponent,
     PannierComponent,
     ListePharmacieComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

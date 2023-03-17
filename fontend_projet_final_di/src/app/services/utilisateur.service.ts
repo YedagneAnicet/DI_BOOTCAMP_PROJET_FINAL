@@ -30,7 +30,6 @@ export class UtilisateurService {
     return this.http.post<any>(`${this.apiUrl}/connexion`, credentials, httpOptions);
   }
 
-
   deconnexion(jeton: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
