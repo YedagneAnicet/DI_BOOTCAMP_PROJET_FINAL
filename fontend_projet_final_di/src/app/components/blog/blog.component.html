@@ -1,11 +1,23 @@
-<div class="card mb-4">
-  <img class="card-img-top" src="https://via.placeholder.com/300x200.png" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Titre de l'article</h5>
-    <p class="card-text">Description de l'article</p>
-  </div>
-  <div class="card-footer">
-    <small class="text-muted me-5">Date de création</small>
-    <button type="button" class="btn btn-outline-primary btn-sm float-right ms-5"><i class="lar la-heart"></i></button>
-  </div>
+<div class="row g-4 py-3 row-cols-1 row-cols-lg-3">
+  <ng-container *ngFor="let article of ListeArticle">
+    <div class="col">
+      <div class="card mb-4 h-100">
+        <img
+          class="card-img-top"
+          [src]="article.image_article"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h5 class="card-title text-success">{{ article.titre_article }}</h5>
+          <p class="card-text">{{ article.description_article }}</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted me-5"
+            >Mise en ligne le
+            {{ article.date_creation | date : "fullDate" }}</small
+          >
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

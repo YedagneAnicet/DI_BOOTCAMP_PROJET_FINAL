@@ -1094,11 +1094,9 @@ $app->post('/api/articles/add', function (Request $request, Response $response, 
     $titre = $data['titre_article'];
     $description = $data['description_article'];
     $image = $data['image_article'];
-    $date = $data['date_creation'];
-    $nombre_like = $data['nombre_like'];
 
     // Vérification des paramètres obligatoires
-    if (!isset($titre) || !isset($description) || !isset($image) || !isset($date) || !isset($nombre_like)) {
+    if (!isset($titre) || !isset($description) || !isset($image)) {
         $error = array(
             "message" => "Tous les champs obligatoires doivent être fournis"
         );
@@ -1109,9 +1107,8 @@ $app->post('/api/articles/add', function (Request $request, Response $response, 
     }
 
 
-    $sql = "INSERT INTO articles_blog (titre_artcile, description_description, image_article, date_creation, nombre_like, id_pharmacie)
-    VALUES (:titre_article, :description_article, :image_article, :date_creation, :nombre_like, (SELECT id_pharmacie FROM pharmacies WHERE role = 1))";
-
+    $sql = "INSERT INTO articles_blog (titre_article, description_article, image_article, date_creation, id_pharmacie)
+    VALUES (:titre_article, :description_article, :image_article, NOW(), (SELECT id_pharmacie FROM pharmacies WHERE role = 1))";
 
     try {
         $db = new DB();
@@ -1121,8 +1118,6 @@ $app->post('/api/articles/add', function (Request $request, Response $response, 
         $stmt->bindParam(':titre_article', $titre);
         $stmt->bindParam(':description_article', $description);
         $stmt->bindParam(':image_article', $image);
-        $stmt->bindParam(':date_creation', $date);
-        $stmt->bindParam(':nombre_like,', $nombre_like);
 
         $stmt->execute();
         $lastInsertId = $conn->lastInsertId();
@@ -1149,6 +1144,33 @@ $app->post('/api/articles/add', function (Request $request, Response $response, 
     }
 });
 
+//selectionner tous les produits
+$app->get('/api/articles/all', function (Request $request, Response $response, array $args) {
+
+    $sql = "SELECT * FROM articles_blog";
+
+    try {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->query($sql);
+        $articles = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        $response->getBody()->write(json_encode($articles));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(200);
+    } catch (PDOException $e) {
+        $error = array(
+            "message" => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+    }
+});
 
 //selection un article avec son id 
 
