@@ -853,11 +853,10 @@ $app->post('/api/produits/add', function (Request $request, Response $response, 
     $description = $data['description_produit'];
     $image = $data['image_produit'];
     $prix = $data['prix_produit'];
-    $quantite = $data['quantite_produit'];
     $categorie = $data['nom_categorie'];
 
     // Vérification des paramètres obligatoires
-    if (!isset($nom) || !isset($description) || !isset($image) || !isset($prix) || !isset($quantite)) {
+    if (!isset($nom) || !isset($description) || !isset($image) || !isset($prix) || !isset($categorie)) {
         $error = array(
             "message" => "Tous les champs obligatoires doivent être fournis"
         );
@@ -868,8 +867,8 @@ $app->post('/api/produits/add', function (Request $request, Response $response, 
     }
 
 
-    $sql = "INSERT INTO produits (nom_produit, description_produit, image_produit, prix_produit, quantite_stock, id_pharmacie, id_categorie)
-    VALUES (:nom_produit, :description_produit, :image_produit, :prix_produit, :quantite_stock, (SELECT id_pharmacie FROM pharmacies WHERE role = 1), (SELECT id_categorie FROM categories WHERE nom_categorie = :nom_categorie))";
+    $sql = "INSERT INTO produits (nom_produit, description_produit, image_produit, prix_produit,id_pharmacie, id_categorie)
+    VALUES (:nom_produit, :description_produit, :image_produit, :prix_produit, (SELECT id_pharmacie FROM pharmacies WHERE role = 1), (SELECT id_categorie FROM categories WHERE nom_categorie = :nom_categorie))";
 
 
     try {
@@ -881,7 +880,6 @@ $app->post('/api/produits/add', function (Request $request, Response $response, 
         $stmt->bindParam(':description_produit', $description);
         $stmt->bindParam(':image_produit', $image);
         $stmt->bindParam(':prix_produit', $prix);
-        $stmt->bindParam(':quantite_stock', $quantite);
         $stmt->bindParam(':nom_categorie', $categorie);
 
         $stmt->execute();

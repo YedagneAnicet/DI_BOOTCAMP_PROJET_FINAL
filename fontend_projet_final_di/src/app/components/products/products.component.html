@@ -2,13 +2,13 @@
 <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
   <ng-container *ngFor="let item of productList">
     <div class="col">
-      <div class="card h-100 text-center content">
-        <img [src]="item.image" [alt]="item.title" class="card-img-top"/>
-        <h3 class="card-title">{{ item.title }}</h3>
-        <p class="card-text text-truncate" style="max-width: 200px; text-overflow: ellipsis;">
-          {{ item.description }}
+      <div class="card content">
+        <img [src]="item.image_produit" [alt]="item.nom_produit" class="card-img-top mt-2"/>
+        <h5 class="card-title">{{ item.nom_produit }}</h5>
+        <p class="card-text">
+          {{ item.description_produit }}
         </p>
-        <h2>${{ item.price }}</h2>
+        <h2>{{ item.prix_produit}} F CFA</h2>
         <ul>
           <li><i class="las la-star checked"></i></li>
           <li><i class="las la-star checked"></i></li>
