@@ -1,49 +1,46 @@
-<app-header></app-header><br><br><br><br /><br /><br>
-<div class="container">
-  <h2 class="pb-2 text-center">Nos produits</h2>
-</div>
-  <div class="container-fluid">
-    <div class="row">
-      <nav class="col-md-2 d-inline-block bg-light sidebar">
-        <div class="sidebar-sticky">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Page principale</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Profil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Paramètres</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+<app-header></app-header>
 
-      <main
-        role="main"
-        class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-success-subtle"
-      >
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-6">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Recherche" />
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">
-                  <i class="las la-search"></i>
-                </button>
-              </div>
+<section id="produit" class="d-flex align-items-center">
+  <div class="container">
+    <h1>Nos Produit</h1>
+  </div>
+</section>
+
+<div class="container-fluid ms-5">
+  <div class="row">
+    <nav class="col-md-2 d-inline-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <ng-container *ngFor="let category of listeCategory">
+            <li class="nav-item">
+              <a class="nav-link" href="#">{{category.nom_categorie}}</a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </nav>
+
+    <main
+    class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4 bg-success-subtle" style="margin-top: 150px;"
+  >
+    <div class="row">
+      <div class="d-flex justify-content-center">
+        <div class="col-8">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Recherche" />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <i class="las la-search"></i>
+              </button>
             </div>
-            <div class="col-3"></div>
           </div>
         </div>
-
-        <app-products></app-products>
-
-      </main>
+      </div>
     </div>
+
+    <app-products></app-products>
+  </main>
+
+  
   </div>
+</div>

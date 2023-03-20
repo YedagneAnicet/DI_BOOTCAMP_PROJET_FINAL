@@ -11,26 +11,25 @@ export class ProduitsService {
 
   constructor(private http: HttpClient) {}
 
-// ajouter un nouveau produit a liste de produit
+  // ajouter un nouveau produit a liste de produit
   addProduct(product: any): Observable<any> {
     const url = `${this.apiUrl}/add`;
     return this.http.post(url, product);
   }
 
-
-// obtenir la liste de tout les poroduits
+  // obtenir la liste de tout les poroduits
   getAllProducts(): Observable<any> {
     const url = `${this.apiUrl}/all`;
     return this.http.get(url);
   }
 
-// obtenir un produit spécifique avec son id
+  // obtenir un produit spécifique avec son id
   getProductById(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get(url);
   }
 
-// modifier un produit existant
+  // modifier un produit existant
   updateProduct(id: number, product: any): Observable<any> {
     const url = `${this.apiUrl}/update/${id}`;
     return this.http.put(url, product).pipe(
@@ -40,8 +39,7 @@ export class ProduitsService {
     );
   }
 
-
-// supprimer un produit existant 
+  // supprimer un produit existant
   deleteProduct(id: number): Observable<any> {
     const url = `${this.apiUrl}/delete/${id}`;
     return this.http
@@ -53,5 +51,9 @@ export class ProduitsService {
       );
   }
 
-  
+  // obtenir la liste de tout les categories
+  getAllCategory(): Observable<any> {
+    const url = `http://localhost:8080/api/categories/all`;
+    return this.http.get(url);
+  }
 }
