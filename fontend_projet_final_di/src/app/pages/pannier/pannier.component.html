@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<br><br><br><br><br>
+<br /><br /><br /><br /><br />
 
 <div class="container mt-5">
   <main>
@@ -12,19 +12,50 @@
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between">
             <span>Sous total</span>
-            <strong>$20</strong>
+            <strong>{{grandTotal}} F CFA</strong>
           </li>
         </ul>
 
         <form class="card p-2">
-            <button type="submit" class="btn btn-secondary">Payer</button>
+          <button type="submit" class="btn btn-secondary">Payer</button>
         </form>
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Pannier</h4>
-        <hr class="border-bottom">
+        <hr class="border-bottom" />
+        <ng-container *ngFor="let item of products">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <img
+                  style="width: 120px"
+                  [src]="item.image_produit"
+                  [alt]="item.nom_produit"
+                />
+              </div>
+              <div class="col">{{ item.nom_produit }}</div>
+              <div class="col text-end fs-4">{{ item.prix_produit }}</div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <button type="button" class="btn btn-outline-danger fs-6">
+                  <i class="las la-trash"></i> Supprimer
+                </button>
+              </div>
+              <div class="col text-end">
+                <button class="btn btn-outline-warning me-2" type="button">
+                  <i class="las la-minus"></i>
+                </button>
+                <button class="btn fs-3">{{item.quantity}}</button>
+                <button class="btn btn-outline-warning ms-2" type="button">
+                  <i class="las la-plus"></i>
+                </button>
+              </div>
+            </div>
+            <hr class="border-bottom" />
+          </div>
+        </ng-container>
       </div>
     </div>
   </main>
-
 </div>

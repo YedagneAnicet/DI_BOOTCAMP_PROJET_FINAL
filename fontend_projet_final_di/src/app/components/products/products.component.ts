@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GestionPannierService } from 'src/app/services/gestion-pannier.service';
 import { ProduitsService } from 'src/app/services/produits.service';
 
 @Component({
@@ -9,12 +10,26 @@ import { ProduitsService } from 'src/app/services/produits.service';
 export class ProductsComponent {
   public productList: any;
 
-  constructor(private _produitService : ProduitsService) {}
+  quantity: number = 1;
+
+  constructor(
+    private _produitService: ProduitsService,
+    private _pannier: GestionPannierService
+  ) {}
 
   ngOnInit(): void {
-    this._produitService.getAllProducts().subscribe((response)=> {
+    this._produitService.getAllProducts().subscribe((response) => {
       this.productList = response;
-      console.log(response)
-    })
+      this.productList.forEach((a: any) => {
+        Object.assign(a, {
+          quantity: this.quantity,
+          total: a.prix_produit * this.quantity,
+        });
+      });
+    });
+  }
+
+  addtocart(item: any) {
+    this._pannier.addToCart(item);
   }
 }
