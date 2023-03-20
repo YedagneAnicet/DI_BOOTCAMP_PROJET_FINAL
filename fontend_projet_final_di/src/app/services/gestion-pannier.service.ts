@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class GestionPannierService {
-  
+
   public cartItemList: any = [];
   public productList = new BehaviorSubject<any>([]);
 
@@ -36,7 +36,7 @@ export class GestionPannierService {
 
   removeCartItem(product: any){
     this.cartItemList.map((a:any, index:any)=>{
-      if(product.id === a.id){
+      if(product.id_produit === a.id_produit){
         this.cartItemList.splice(index,1);
       }
     })
