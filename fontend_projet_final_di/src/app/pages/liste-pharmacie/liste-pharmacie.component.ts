@@ -12,11 +12,11 @@ export class ListePharmacieComponent implements OnInit {
 
   ListePharmacieGarde!: any;
 
-  ListePharmacieCommune !: any;
+  ListePharmacieCommune!: any;
 
   FormRecherche!: FormGroup;
 
-  allgarde = true
+  allgarde = true;
 
   constructor(
     private _pharmacieService: PharmacieService,
@@ -25,9 +25,9 @@ export class ListePharmacieComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCommune();
-    this.getPharmacieGarde()
+    this.getPharmacieGarde();
     this.FormRecherche = this._fb.group({
-      commune : [''],
+      commune: [''],
     });
   }
 
@@ -53,21 +53,19 @@ export class ListePharmacieComponent implements OnInit {
     });
   }
 
-
-
   // obtenir la liste de toutes les pharmacie de garde par commune
   onSubmit() {
     if (this.FormRecherche.invalid) {
       return;
     }
-this.allgarde = false
+    this.allgarde = false;
     const commune = this.FormRecherche.controls['commune'].value;
 
-    console.log(commune)
+    console.log(commune);
 
     this._pharmacieService.getPharmaciesByVilleAndGarde(commune).subscribe({
       next: (reponse: any) => {
-        this.ListePharmacieCommune = reponse
+        this.ListePharmacieCommune = reponse;
       },
       error: (error: any) => {
         console.log(error);

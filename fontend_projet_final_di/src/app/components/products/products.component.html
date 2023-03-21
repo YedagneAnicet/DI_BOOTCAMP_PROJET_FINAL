@@ -1,25 +1,61 @@
-
-<div class="row row-cols-1 row-cols-md-3 g-4 mt-3 ms-3">
-  <ng-container *ngFor="let item of productList">
-    <div class="col">
-      <div class="card content">
-        <img [src]="item.image_produit" [alt]="item.nom_produit" class="card-img-top mt-2"/>
-        <h5 class="card-title">{{ item.nom_produit }}</h5>
-        <p class="card-text">
-          {{ item.description_produit }}
-        </p>
-        <h2>{{ item.prix_produit}} F CFA</h2>
-        <ul>
-          <li><i class="las la-star checked"></i></li>
-          <li><i class="las la-star checked"></i></li>
-          <li><i class="las la-star checked"></i></li>
-          <li><i class="las la-star checked"></i></li>
-          <li><i class="las la-star"></i></li>
-        </ul>
-        <button class="buy-btn" (click)="addtocart(item)">
-          <i class="las la-cart-plus" style="font-size: 50px"></i>
-        </button>
+<ng-container *ngIf="!categorieActive">
+  <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 ms-3">
+    <ng-container *ngFor="let item of productList">
+      <div class="col">
+        <div class="card content">
+          <img
+            [src]="item.image_produit"
+            [alt]="item.nom_produit"
+            class="card-img-top mt-2"
+          />
+          <h5 class="card-title">{{ item.nom_produit }}</h5>
+          <p class="card-text">
+            {{ item.description_produit }}
+          </p>
+          <h2>{{ item.prix_produit }} F CFA</h2>
+          <ul>
+            <li><i class="las la-star checked"></i></li>
+            <li><i class="las la-star checked"></i></li>
+            <li><i class="las la-star checked"></i></li>
+            <li><i class="las la-star checked"></i></li>
+            <li><i class="las la-star"></i></li>
+          </ul>
+          <button class="buy-btn" (click)="addtocart(item)">
+            <i class="las la-cart-plus" style="font-size: 50px"></i>
+          </button>
+        </div>
       </div>
+    </ng-container>
   </div>
-  </ng-container>
-</div>
+</ng-container>
+
+<ng-container *ngIf="categorieActive">
+  <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 ms-3">
+    <ng-container *ngFor="let item of listeProduitCategorie">
+      <div class="col">
+        <div class="card content">
+          <img
+            [src]="item.image_produit"
+            [alt]="item.nom_produit"
+            class="card-img-top mt-2"
+          />
+          <h5 class="card-title">{{ item.nom_produit }}</h5>
+          <p class="card-text">
+            {{ item.description_produit }}
+          </p>
+          <h2>{{ item.prix_produit }} F CFA</h2>
+          <ul>
+            <li><i class="las la-star checked"></i></li>
+            <li><i class="las la-star checked"></i></li>
+            <li><i class="las la-star checked"></i></li>
+            <li><i class="las la-star checked"></i></li>
+            <li><i class="las la-star"></i></li>
+          </ul>
+          <button class="buy-btn" (click)="addtocart(item)">
+            <i class="las la-cart-plus" style="font-size: 50px"></i>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListProductsComponent implements OnInit {
   listeCategory!: any;
+  categorieId: any;
 
+  categorieActive = false;
 
   constructor(private _produitService: ProduitsService) {}
 
@@ -27,5 +29,9 @@ export class ListProductsComponent implements OnInit {
     });
   }
 
-
+  getCategorieId(categoryId: number) {
+    this.categorieActive = true;
+    this.categorieId = categoryId;
+    console.log(this.categorieId);
+  }
 }

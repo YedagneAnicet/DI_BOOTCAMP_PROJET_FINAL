@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnInit,
+} from '@angular/core';
 import { GestionPannierService } from 'src/app/services/gestion-pannier.service';
 import { ProduitsService } from 'src/app/services/produits.service';
 
@@ -7,9 +13,13 @@ import { ProduitsService } from 'src/app/services/produits.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnChanges, OnInit {
   public productList: any;
-  @Input() search: string = '';
+
+  public listeProduitCategorie: any;
+
+  @Input() categorieId: any;
+  @Input() categorieActive = false;
 
   quantity: number = 1;
 
@@ -30,12 +40,22 @@ export class ProductsComponent {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this._produitService
+      .getProductsByCategory(this.categorieId)
+      .subscribe((response) => {
+        this.listeProduitCategorie = response;
+        console.log(response);
+        this.listeProduitCategorie.forEach((a: any) => {
+          Object.assign(a, {
+            quantity: this.quantity,
+            total: a.prix_produit * this.quantity,
+          });
+        });
+      });
+  }
+
   addtocart(item: any) {
     this._pannier.addToCart(item);
   }
-
-
-
-
-
 }

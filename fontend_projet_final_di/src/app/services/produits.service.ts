@@ -56,4 +56,10 @@ export class ProduitsService {
     const url = `http://localhost:8080/api/categories/all`;
     return this.http.get(url);
   }
+
+  //obtenir la liste des produits par categories
+  getProductsByCategory(categoryId: string) {
+    const url = `http://localhost:8080/api/categories/${categoryId}/produits`;
+    return this.http.get(url);
+  }
 }
