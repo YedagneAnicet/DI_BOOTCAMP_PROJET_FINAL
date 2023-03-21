@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,13 +15,12 @@ import {
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  error = '';
   submitted = false;
-  message!: string;
 
   constructor(
     private _utilisateur: UtilisateurService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _router: Router
   ) {}
 
   ngOnInit() {
@@ -43,13 +43,15 @@ export class LoginComponent implements OnInit {
     const email = this.loginForm.controls['email'].value;
     const mdp = this.loginForm.controls['mdp'].value;
 
-    this._utilisateur.connexion({ email, mdp }).subscribe(
-      (data) => {
-        console.log(data);
+    this._utilisateur.connexion({ email, mdp }).subscribe({
+      next: (res) => {
+        console.log(res);
+        localStorage.setItem('token', res.jeton);
+        this._router.navigate(['/home']);
       },
-      (error) => {
-        this.error = "Nom d'utilisateur ou mot de passe incorrect";
-      }
-    );
+      error: (err) => {
+        console.log(err)
+      },
+    });
   }
 }

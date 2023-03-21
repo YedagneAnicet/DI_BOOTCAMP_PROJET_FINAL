@@ -19,6 +19,7 @@ import { PannierComponent } from './pages/pannier/pannier.component';
 import { ListePharmacieComponent } from './pages/liste-pharmacie/liste-pharmacie.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CorsInterceptor } from './cors.interceptor';
+import { AuthInterceptor } from './auth.interceptor';
 
 registerLocaleData(localeFr, 'fr');
 @NgModule({
@@ -41,11 +42,12 @@ registerLocaleData(localeFr, 'fr');
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'fr' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

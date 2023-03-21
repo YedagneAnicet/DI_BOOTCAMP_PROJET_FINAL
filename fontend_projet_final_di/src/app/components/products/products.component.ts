@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GestionPannierService } from 'src/app/services/gestion-pannier.service';
 import { ProduitsService } from 'src/app/services/produits.service';
 
@@ -9,6 +9,7 @@ import { ProduitsService } from 'src/app/services/produits.service';
 })
 export class ProductsComponent {
   public productList: any;
+  @Input() search: string = '';
 
   quantity: number = 1;
 
@@ -32,4 +33,9 @@ export class ProductsComponent {
   addtocart(item: any) {
     this._pannier.addToCart(item);
   }
+
+
+
+
+
 }
