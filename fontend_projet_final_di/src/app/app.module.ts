@@ -14,7 +14,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { LoginComponent } from './components/login/login.component';
 import { ListProductsComponent } from './pages/list-products/list-products.component';
 import { ListArticleBlogComponent } from './pages/list-article-blog/list-article-blog.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PannierComponent } from './pages/pannier/pannier.component';
 import { ListePharmacieComponent } from './pages/liste-pharmacie/liste-pharmacie.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -41,6 +41,7 @@ registerLocaleData(localeFr, 'fr');
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },

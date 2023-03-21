@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-pannier',
   templateUrl: './pannier.component.html',
-  styleUrls: ['./pannier.component.scss']
+  styleUrls: ['./pannier.component.scss'],
 })
 export class PannierComponent {
   public products: any = [];
@@ -22,7 +22,19 @@ export class PannierComponent {
     this._pannier.removeCartItem(item);
   }
 
-  emptycart(){
+  emptycart() {
     this._pannier.removeAllCart();
+  }
+
+  increaseQuantity(item: any) {
+    item.quantity++;
+    this.grandTotal = this._pannier.getTotalPrice();
+  }
+
+  decreaseQuantity(item: any) {
+    if (item.quantity > 1) {
+      item.quantity--;
+      this.grandTotal = this._pannier.getTotalPrice();
+    }
   }
 }

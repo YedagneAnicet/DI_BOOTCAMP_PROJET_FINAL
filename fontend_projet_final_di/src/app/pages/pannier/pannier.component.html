@@ -12,7 +12,7 @@
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between">
             <span>Sous total</span>
-            <strong>{{grandTotal}} F CFA</strong>
+            <strong>{{ grandTotal }} F CFA</strong>
           </li>
         </ul>
 
@@ -38,16 +38,28 @@
             </div>
             <div class="row mt-2">
               <div class="col">
-                <button type="button" class="btn btn-outline-danger fs-6" (click)="removeItem(item)">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger fs-6"
+                  (click)="removeItem(item)"
+                >
                   <i class="las la-trash"></i> Supprimer
                 </button>
               </div>
               <div class="col text-end">
-                <button class="btn btn-outline-warning me-2" type="button">
+                <button
+                  class="btn btn-outline-warning me-2"
+                  type="button"
+                  (click)="decreaseQuantity(item)"
+                >
                   <i class="las la-minus"></i>
                 </button>
-                <button class="btn fs-3">{{item.quantity}}</button>
-                <button class="btn btn-outline-warning ms-2" type="button">
+                <button class="btn fs-3">{{ item.quantity }}</button>
+                <button
+                  class="btn btn-outline-warning ms-2"
+                  type="button"
+                  (click)="increaseQuantity(item)"
+                >
                   <i class="las la-plus"></i>
                 </button>
               </div>
