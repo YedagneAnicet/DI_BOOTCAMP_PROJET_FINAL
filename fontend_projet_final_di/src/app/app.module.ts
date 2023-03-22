@@ -21,6 +21,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { CorsInterceptor } from './cors.interceptor';
 import { AuthInterceptor } from './auth.interceptor';
 import { ProductsHomeComponent } from './components/products-home/products-home.component';
+import { MapComponent } from './components/map/map.component';
 
 registerLocaleData(localeFr, 'fr');
 @NgModule({
@@ -38,6 +39,7 @@ registerLocaleData(localeFr, 'fr');
     ListePharmacieComponent,
     RegisterComponent,
     ProductsHomeComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,

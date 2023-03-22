@@ -64,9 +64,12 @@
           <td>{{ pharmacie.telephone_pharmacie }}</td>
           <td>{{ pharmacie.adresse_pharmacie }}</td>
           <td>{{ pharmacie.ville_pharmacie }}</td>
+          <td><app-map [location]="pharmacie.adresse_pharmacie"></app-map>
+          </td>
         </tr>
       </ng-container>
 
     </tbody>
   </table>
 </div>
+
