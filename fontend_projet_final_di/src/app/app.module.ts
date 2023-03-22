@@ -20,6 +20,7 @@ import { ListePharmacieComponent } from './pages/liste-pharmacie/liste-pharmacie
 import { RegisterComponent } from './components/register/register.component';
 import { CorsInterceptor } from './cors.interceptor';
 import { AuthInterceptor } from './auth.interceptor';
+import { ProductsHomeComponent } from './components/products-home/products-home.component';
 
 registerLocaleData(localeFr, 'fr');
 @NgModule({
@@ -36,6 +37,7 @@ registerLocaleData(localeFr, 'fr');
     PannierComponent,
     ListePharmacieComponent,
     RegisterComponent,
+    ProductsHomeComponent,
   ],
   imports: [
     BrowserModule,

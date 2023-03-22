@@ -1,0 +1,97 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    border-radius: 15px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    transition: 0.4s;
+    margin: 10px auto;
+    text-align: center;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    width: 284px;
+  }
+
+  .content:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3pc 6px rgba(0, 0, 0, 0.23);
+    transform: translate(0px, -8px);
+    cursor: pointer;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-img-top {
+    width: 90%;
+    object-fit: cover;
+    height: 200px;
+  }
+
+  .card-title {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-text {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  h2 {
+    width: 100%;
+  }
+
+  ul {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin: 0 5px;
+  }
+
+  .las {
+    font-size: 26px;
+    transition: 0.4s;
+    margin: 3px;
+  }
+
+  .checked {
+    color: #ff9f43;
+  }
+
+  .las:hover {
+    transform: scale(1.3);
+    transform: 0.6s;
+  }
+
+  .buy-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+    color: #fff;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    margin-top: 5px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background: rgb(14, 219, 14);
+  }
