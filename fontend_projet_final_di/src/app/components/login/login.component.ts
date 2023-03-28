@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
-      return;
+      alert("Mot de passe ou email incorrect")
     }
 
     const email = this.loginForm.controls['email'].value;
@@ -47,11 +47,12 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         console.log(res);
         localStorage.setItem('token', res.jeton);
-        this._router.navigate(['/home']);
       },
       error: (err) => {
         console.log(err)
       },
     });
+
+    this._router.navigate(['/pannier']);
   }
 }
